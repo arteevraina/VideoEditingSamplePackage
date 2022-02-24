@@ -23,19 +23,19 @@ class VideoEditing {
 
         if (ReturnCode.isSuccess(returnCode)) {
           // If everything goes fine. Log success.
-          log("success");
+          print("success");
         } else if (ReturnCode.isCancel(returnCode)) {
           // TODO: Add a function call for cancelling the execution.
           // If execution has been cancelled. Log cancel.
           log("cancel");
         } else {
           // If there is an error while execution, Log error.
-          log("error");
+          print("error");
         }
       },
       (Log logs) {
         // This is necessary for printing log while execution.
-        log(logs.getMessage());
+        print(logs.getMessage());
       },
       (statistics) {
         // TODO: No idea why this callback is there for.
@@ -63,7 +63,7 @@ class VideoEditing {
     final videoDirectory = await createDirectory();
 
     String command =
-        '-y -i $pathOfVideo -i $pathOfImage -filter_complex "[0:v][1:v] overlay=20:20" -vcodec libx264 -preset ultrafast -c:a copy -s 480x320 ${videoDirectory.path}/output.mp4';
+        '-y -i $pathOfVideo -i $pathOfImage -filter_complex "[0:v][1:v] overlay=20:20" -vcodec libx264 -preset ultrafast -c:a copy -s 852x480 ${videoDirectory.path}/output.mp4';
 
     await executeCommand(command);
   }
@@ -71,7 +71,7 @@ class VideoEditing {
   Future<void> editWithPreset(String pathOfVideo) async {
     final videoDirectory = await createDirectory();
     String command =
-        '-y -i $pathOfVideo -vcodec libx264 -preset veryfast -c:a copy -vf scale=480x320 ${videoDirectory.path}/output.mp4';
+        '-y -i $pathOfVideo -vcodec libx264 -preset ultrafast -c:a copy -s 852x480 ${videoDirectory.path}/output.mp4';
 
     await executeCommand(command);
   }
